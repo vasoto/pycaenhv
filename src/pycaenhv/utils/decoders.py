@@ -1,7 +1,7 @@
 from ctypes import POINTER as P, c_char, c_char_p, cast
 from typing import List
 
-CharPtrList = P(c_char)
+CharPtrList = c_char_p
 
 
 def get_strlist_element(char_ptr_list: CharPtrList,

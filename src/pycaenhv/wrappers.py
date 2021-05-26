@@ -34,7 +34,7 @@ def init_system(system_type: Union[CAENHV_SYSTEM_TYPE, int],
     return _handle.value
 
 
-def deinit_system(handle: int) -> NoReturn:
+def deinit_system(handle: int) -> None:
     """ Deinitialize system 
     """
     err = CAENHV_DeinitSystem(handle)
@@ -82,6 +82,7 @@ def get_channel_parameter_property(handle: int, slot: int, channel: int,
     _res = PropertyTypes[prop_name]()
     err = CAENHV_GetChParamProp(handle, _slot, _ch, _param, _prop, byref(_res))
     check_function_output(err)
+    #FIX: will fail for Enum
     return _res.value
 
 
@@ -101,7 +102,7 @@ def get_channel_parameter(
     _slot = c_ushort(slot)
     _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
-    _ch_list = P(ctypes.c_ushort)()
+    _ch_list = P(c_ushort)()
     err = CAENHV_GetChParam(handle, _slot, _param, _ch, _ch_list, byref(_res))
     check_function_output(err)
     return _res.value
