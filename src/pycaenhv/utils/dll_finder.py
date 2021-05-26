@@ -4,19 +4,16 @@ import os
 from typing import List, Union, Optional
 
 SEARCH_DIRECTORIES = [
-    '/lib',
-    '/lib64',
-    '/usr/lib', 
-    '/usr/lib64', 
-    '/usr/local/lib', 
-    '/usr/local/lib64',
-    '~/local/lib',
-    '~/local/lib64'
-    ]
+    '/lib', '/lib64', '/usr/lib', '/usr/lib64', '/usr/local/lib',
+    '/usr/local/lib64', '~/local/lib', '~/local/lib64'
+]
 
 search_pattern = 'libcaenhvwrapper.so*'
 
-def find_dll(extra_dirs:Optional[List[Union[str,Path]]] = None)->Union[Path, None]:
+
+def find_dll(
+        extra_dirs: Optional[List[Union[str,
+                                        Path]]] = None) -> Union[Path, None]:
     """ Search for libcaenhvwrapper.so* in known places
     """
     _search_dirs = SEARCH_DIRECTORIES + []
@@ -35,6 +32,7 @@ def find_dll(extra_dirs:Optional[List[Union[str,Path]]] = None)->Union[Path, Non
             # print(f"Going to search {search_path}")
             for filename in glob(search_path):
                 return Path(filename)
+
 
 if __name__ == '__main__':
     print("Found CAENHVWrapper library in", find_dll())

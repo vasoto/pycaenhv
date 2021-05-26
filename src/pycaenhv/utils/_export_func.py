@@ -1,7 +1,11 @@
 from typing import Any, Optional, List
 
 
-def export_func(lib:Any, function_name:str, return_type:Any, arguments:Optional[List[Any]]=None, doc_str:str=None)->Any:
+def export_func(lib: Any,
+                function_name: str,
+                return_type: Any,
+                arguments: Optional[List[Any]] = None,
+                doc_str: str = None) -> Any:
     """ Export function from dll `lib`
     """
     func_ = getattr(lib, function_name)
