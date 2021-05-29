@@ -82,3 +82,19 @@ CAENHV_GetCrateMap = export_func(
         P(P(c_ubyte))  # Firmware max rel list
     ],
     "Get the crate map")
+
+# CAENHVLIB_API CAENHVRESULT  CAENHV_SetChParam(int handle, ushort slot,
+#  const char *ParName, ushort ChNum, const ushort *ChList, void *ParValue);
+CAENHV_SetChParam = export_func(
+    lib,
+    'CAENHV_SetChParam',
+    c_int,
+    [
+        c_int,  # handle
+        c_ushort,  # slot
+        c_char_p,  # ParName
+        c_ushort,  # ChNum
+        P(c_ushort),  # ChList
+        c_void_p  # ParValue
+    ],
+    "Set channel parameter's value")
