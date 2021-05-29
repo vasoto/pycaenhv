@@ -5,7 +5,10 @@ This package provides access to all the CAENHVWrapper functionality in pure Pyth
 ## Install
 
 1. Download latest version of CAENHVWrapper
-2. Install pycaenhv: `pip install -U .`
+2. Install pycaenhv: 
+```bash
+pip install -U .
+```
 
 ### Client
 
