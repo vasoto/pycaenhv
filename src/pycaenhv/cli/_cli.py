@@ -81,15 +81,25 @@ def channels():
 @channels.command("info")
 @click.argument('slot', type=int)
 @click.argument('channel', required=False, type=int)
+@click.option("--json",
+              "-j",
+              'use_json',
+              is_flag=True,
+              help="export to JSON format")
 @click.pass_obj
-def info(hv, slot: int, channel: int):
+def info(hv, slot: int, channel: int, use_json):
     with hv as cntx:
+        info = channel_info(cntx.handle, slot, channel)
         if channel is not None:
-            print(
-                f"Channel {channel} in slot {slot} supports following parameters:"
-            )
-            channel_info(cntx.handle, slot, channel)
+            if use_json:
+                result = dict(channel=channel, slot=slot, parameters=info)
+                print(json.dumps(result, indent=4, sort_keys=True))
+            else:
+                print(
+                    f"Channel {channel} in slot {slot} supports following parameters:\n"
+                )
 
+                print(tabulate(info, headers='keys', tablefmt='fancy_grid'))
         else:
             crate_map = get_crate_map(cntx.handle)
             num_channels = crate_map['channels'][slot]
