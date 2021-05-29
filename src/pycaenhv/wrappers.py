@@ -1,12 +1,15 @@
-from ctypes import byref, c_int, c_short, c_ubyte, c_ushort, c_char_p, POINTER as P, cast, c_char
-from typing import List, NoReturn, Union, Any, Optional, Dict
+from ctypes import byref, c_int, c_ubyte, c_ushort, c_char_p, POINTER as P
+from typing import List, Union, Any, Optional, Dict
 
-from .errors import CAENHVError, check_function_output
+from .errors import check_function_output
 from .enums import CAENHV_SYSTEM_TYPE, LinkType
 from .utils import get_char_list, get_strlist_element
 from .constants import MAX_PARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME
 from .parameters import PropertyTypes, ParameterTypes, ParameterPythonTypes
-from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, CAENHV_InitSystem, CAENHV_DeinitSystem, CAENHV_GetChParamInfo, CAENHV_GetChParamProp, CAENHV_GetChParam, CAENHV_GetCrateMap, CAENHV_SetChParam
+from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
+    CAENHV_InitSystem, CAENHV_DeinitSystem, CAENHV_GetChParamInfo, \
+    CAENHV_GetChParamProp, CAENHV_GetChParam, CAENHV_GetCrateMap, \
+    CAENHV_SetChParam
 
 
 def software_release() -> str:
@@ -61,6 +64,7 @@ def get_channel_parameters(handle: int, slot: int, channel: int) -> List[str]:
     _count = c_int()
     err = CAENHV_GetChParamInfo(handle, _slot, _ch, byref(raw_char_list),
                                 byref(_count))
+    check_function_output(err)
     count = _count.value
     result = [
         get_strlist_element(raw_char_list, i, MAX_PARAM_NAME)
@@ -82,8 +86,8 @@ def get_channel_parameter_property(handle: int, slot: int, channel: int,
     _res = PropertyTypes[prop_name]()
     err = CAENHV_GetChParamProp(handle, _slot, _ch, _param, _prop, byref(_res))
     check_function_output(err)
-    #FIX: will fail for Enum
-    #FIX: fails for char
+    # FIX: will fail for Enum
+    # FIX: fails for char
     return _res.value
 
 
@@ -99,7 +103,6 @@ def get_channel_parameter(
     # TODO: use channel list
     type_ = get_channel_parameter_property(handle, slot, channel, param_name,
                                            "Type")
-    ch_list = [0]
     _res = ParameterTypes[type_]()
     _slot = c_ushort(slot)
     _ch = c_ushort(channel)

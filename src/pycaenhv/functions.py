@@ -1,7 +1,6 @@
 from ctypes import POINTER, c_char_p, c_int, c_ushort, c_ubyte, c_void_p
 
 from ._lib import load_lib
-from .errors import check_function_output
 from .utils import export_func
 
 P = POINTER

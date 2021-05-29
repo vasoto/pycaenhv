@@ -54,4 +54,4 @@ def check_function_output(command_output: int,
     return True
 
 
-#TODO: Add decorator
+# TODO: Add decorator

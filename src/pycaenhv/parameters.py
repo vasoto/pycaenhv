@@ -1,7 +1,6 @@
 """ Channel property types
 """
-from ctypes import c_char, c_char_p, c_short, c_ushort, c_ulong, c_float, c_bool, c_uint, c_int, POINTER as P
-from typing import Dict, Any
+from ctypes import c_char_p, c_short, c_ushort, c_ulong, c_float, c_uint, c_int, POINTER as P
 
 PropertyTypes = dict(
     Type=c_ulong,

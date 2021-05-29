@@ -1,9 +1,7 @@
-from time import sleep
 from typing import Any, Dict
 
 from . import parameters as par
 from .wrappers import get_channel_parameter, get_channel_parameter_property, get_channel_parameters
-from .errors import CAENHVError
 
 
 def format_numeric(param_info: Dict[str, Any]) -> str:
@@ -31,7 +29,7 @@ def get_parameter_information(handle: int, slot: int, channel: int,
                                                 parameter, 'Mode')
 
     mode = par.Modes[param_mode]
-    type_ = par.ParameterTypes[param_type]
+    # type_ = par.ParameterTypes[param_type]
     properties = dict()
 
     for prop_name, prop_type in par.ParameterProperties[param_type].items():

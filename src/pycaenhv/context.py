@@ -16,14 +16,11 @@ class HVContext:
         self.argument = argument
         self.user = user
         self.password = password
-        self.handle: int = None
+        self.handle: int = -1
 
     def __enter__(self):
-        try:
-            system = CAENHV_SYSTEM_TYPE[self.system.upper()]
-            link = LinkType[self.link.upper()]
-        except AttributeError as err:
-            print("Missing value")
+        system = CAENHV_SYSTEM_TYPE[self.system.upper()]
+        link = LinkType[self.link.upper()]
         self.handle = init_system(system, link, self.argument, self.user,
                                   self.password)
         return self

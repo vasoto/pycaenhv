@@ -21,7 +21,7 @@ def main():
         print(f"Board parameters: {board_parameters}")
 
     except CAENHVError as err:
-        print("Got error: {err}\nExiting ...")
+        print(f"Got error: {err}\nExiting ...")
     finally:
         print("Deinitialize.")
         deinit_system(handle=handle)
