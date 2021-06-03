@@ -12,6 +12,19 @@ def get_strlist_element(char_ptr_list: CharPtrList,
     return (cast(char_ptr_list, P(c_char * max_val)))[index].value.decode()
 
 
+def iter_str_list(char_ptr_list, size: int) -> List[str]:
+    elem = ''
+    length = 0
+    i = 0
+    result = []
+    while (i < size):
+        elem = (cast(char_ptr_list, P(c_char * length)))[0]
+        length += len(elem)
+        i += 1
+        result.append(elem)
+    return result
+
+
 def get_char_list(charp_list: c_char_p, max_element_size: int) -> List[str]:
     """ Converts char** list to python list of strings, without knowing the size of the list.
     """

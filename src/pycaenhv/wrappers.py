@@ -3,7 +3,7 @@ from typing import List, Union, Any, Optional, Dict
 
 from .errors import check_function_output
 from .enums import CAENHV_SYSTEM_TYPE, LinkType
-from .utils import get_char_list, get_strlist_element
+from .utils import get_char_list, get_strlist_element, iter_str_list
 from .constants import MAX_PARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME
 from .parameters import PropertyTypes, ParameterTypes, ParameterPythonTypes
 from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
@@ -132,13 +132,15 @@ def get_crate_map(handle: int) -> Dict[str, Any]:
     check_function_output(err)
     slots = _slots.value
     channels = [_channels[i] for i in range(slots)]
-    models = [
-        get_strlist_element(_models, i, MAX_BOARD_NAME) for i in range(slots)
-    ]
-    descriptions = [
-        get_strlist_element(_descriptions, i, MAX_BOARD_DESC)
-        for i in range(slots)
-    ]
+    models = iter_str_list(_models, slots)
+    #[
+    #     get_strlist_element(_models, i, MAX_BOARD_NAME) for i in range(slots)
+    # ]
+    descriptions = iter_str_list(_descriptions, slots)
+    # [
+    #     get_strlist_element(_descriptions, i, MAX_BOARD_DESC)
+    #     for i in range(slots)
+    # ]
     serial_numbers = [_serial_numbers[i] for i in range(slots)]
     firmware_releases = [(_fw_max_rel[i], _fw_min_rel[i])
                          for i in range(slots)]
