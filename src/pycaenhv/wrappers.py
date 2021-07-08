@@ -167,7 +167,7 @@ def set_channel_parameter(handle: int, slot: int, channel: int,
     _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
     _ch_list = (c_ushort * 1)()
-    _ch_list[0] = 0
+    _ch_list[0] = channel
     res = CAENHV_SetChParam(handle, _slot, _param, _ch, _ch_list,
                             byref(_value))
     check_function_output(res)
