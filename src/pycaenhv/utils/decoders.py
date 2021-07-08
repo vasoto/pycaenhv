@@ -1,4 +1,4 @@
-from ctypes import POINTER as P, c_char, c_char_p, cast
+from ctypes import POINTER as P, c_char, c_char_p, cast, addressof
 from typing import List
 
 CharPtrList = c_char_p
@@ -13,15 +13,18 @@ def get_strlist_element(char_ptr_list: CharPtrList,
 
 
 def iter_str_list(char_ptr_list, size: int) -> List[str]:
-    elem = ''
-    length = 0
     i = 0
+    j = 0
     result = []
     while (i < size):
-        elem = (cast(char_ptr_list, P(c_char * length)))[0]
-        length += len(elem)
+        elem = bytearray()
+        while (cast(char_ptr_list, P(c_char * 1)))[j].value != b'':
+            elem.extend((cast(char_ptr_list, P(c_char * 1)))[j].value)
+            j += 1
+        j += 1
         i += 1
-        result.append(elem)
+        print(elem)
+        result.append(elem.decode())
     return result
 
 
