@@ -96,21 +96,24 @@ def get_channel_parameter(
     slot: int,
     channel: int,
     param_name: str,
-    channel_list: Optional[List[str]] = None,
+    # channel_list: Optional[List[str]] = None,
 ) -> Any:
     """ Get the value of a channel `channel` parameter `param_name`
     """
-    # TODO: use channel list
-    type_ = get_channel_parameter_property(handle, slot, channel, param_name,
-                                           "Type")
+    type_ = get_channel_parameter_property(handle=handle,
+                                           slot=slot,
+                                           channel=channel,
+                                           param_name=param_name,
+                                           prop_name="Type")
     _res = ParameterTypes[type_]()
     _slot = c_ushort(slot)
-    _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
     _ch_list = (c_ushort * 1)()
-    _ch_list[0] = 0
-    err = CAENHV_GetChParam(handle, _slot, _param, _ch, _ch_list, byref(_res))
+    _ch_list[0] = channel
+
+    err = CAENHV_GetChParam(handle, _slot, _param, 1, _ch_list, byref(_res))
     check_function_output(err)
+
     return _res.value
 
 

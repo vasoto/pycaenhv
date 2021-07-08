@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from . import parameters as par
 from .wrappers import get_channel_parameter, get_channel_parameter_property, get_channel_parameters
@@ -22,19 +22,32 @@ ParameterDecoder = {0: format_numeric}
 
 def get_parameter_information(handle: int, slot: int, channel: int,
                               parameter: str) -> Dict[str, Any]:
-    value = get_channel_parameter(handle, slot, channel, parameter)
-    param_type = get_channel_parameter_property(handle, slot, channel,
-                                                parameter, 'Type')
-    param_mode = get_channel_parameter_property(handle, slot, channel,
-                                                parameter, 'Mode')
+
+    value = get_channel_parameter(handle=handle,
+                                  slot=slot,
+                                  channel=channel,
+                                  param_name=parameter)
+    param_type = get_channel_parameter_property(handle=handle,
+                                                slot=slot,
+                                                channel=channel,
+                                                param_name=parameter,
+                                                prop_name='Type')
+    param_mode = get_channel_parameter_property(handle=handle,
+                                                slot=slot,
+                                                channel=channel,
+                                                param_name=parameter,
+                                                prop_name='Mode')
 
     mode = par.Modes[param_mode]
     # type_ = par.ParameterTypes[param_type]
     properties = dict()
 
     for prop_name, prop_type in par.ParameterProperties[param_type].items():
-        r = get_channel_parameter_property(handle, slot, channel, parameter,
-                                           prop_name)
+        r = get_channel_parameter_property(handle=handle,
+                                           slot=slot,
+                                           channel=channel,
+                                           param_name=parameter,
+                                           prop_name=prop_name)
         properties[prop_name] = r
     result = dict(value=value,
                   mode=mode,
@@ -70,13 +83,14 @@ def normalize_cahnnel_info(name, info: Dict[str, Any]) -> Dict[str, Any]:
     )
 
 
-def channel_info(handle, slot, channel):
+def channel_info(handle: int, slot: int, channel: int) -> List:
     """ Returns all information about a channel
     """
     parameters = get_channel_parameters(handle, slot, channel)
     result = []
     for param in parameters:
         param_info = get_parameter_information(handle, slot, channel, param)
+
         result.append(normalize_cahnnel_info(param, param_info))
         # formatter = ParameterDecoder.get(param_info['type'], lambda a: a)
         # print(param_info)
