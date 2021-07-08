@@ -18,12 +18,18 @@ class HVContext:
         self.password = password
         self.handle: int = -1
 
-    def __enter__(self):
+    def start(self):
         system = CAENHV_SYSTEM_TYPE[self.system.upper()]
         link = LinkType[self.link.upper()]
         self.handle = init_system(system, link, self.argument, self.user,
                                   self.password)
+
+    def __enter__(self):
+        self.start()
         return self
 
-    def __exit__(self, type, value, traceback):
+    def close(self) -> None:
         deinit_system(self.handle)
+
+    def __exit__(self, type, value, traceback):
+        self.close()

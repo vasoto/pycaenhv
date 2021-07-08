@@ -23,7 +23,6 @@ def iter_str_list(char_ptr_list, size: int) -> List[str]:
             j += 1
         j += 1
         i += 1
-        print(elem)
         result.append(elem.decode())
     return result
 

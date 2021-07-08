@@ -136,14 +136,7 @@ def get_crate_map(handle: int) -> Dict[str, Any]:
     slots = _slots.value
     channels = [_channels[i] for i in range(slots)]
     models = iter_str_list(_models, slots)
-    #[
-    #     get_strlist_element(_models, i, MAX_BOARD_NAME) for i in range(slots)
-    # ]
     descriptions = iter_str_list(_descriptions, slots)
-    # [
-    #     get_strlist_element(_descriptions, i, MAX_BOARD_DESC)
-    #     for i in range(slots)
-    # ]
     serial_numbers = [_serial_numbers[i] for i in range(slots)]
     firmware_releases = [(_fw_max_rel[i], _fw_min_rel[i])
                          for i in range(slots)]
