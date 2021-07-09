@@ -1,0 +1,13 @@
+[hv]
+[hv.test]
+board = "V65XX"
+link = "USB"
+address = "0_0_33110000"
+[hv.test.channels]
+[hv.test.channels.default]
+VSet=350
+ISet=500
+[hv.test.channels.channel.1]
+VSet=500
+ISet=1000
+
