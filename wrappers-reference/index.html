@@ -1,0 +1,926 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.11">
+    
+    
+      
+        <title>Wrappers - PyCaenHV</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.3754935a.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wrappers-module" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="PyCaenHV" class="md-header__button md-logo" aria-label="PyCaenHV" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyCaenHV
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Wrappers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="PyCaenHV" class="md-nav__button md-logo" aria-label="PyCaenHV" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    PyCaenHV
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scripts/" class="md-nav__link">
+        Scripts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        Code Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Code Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Code Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Wrappers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Wrappers
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers" class="md-nav__link">
+    pycaenhv.wrappers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.deinit_system" class="md-nav__link">
+    deinit_system()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_board_parameters" class="md-nav__link">
+    get_board_parameters()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_channel_parameter" class="md-nav__link">
+    get_channel_parameter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_channel_parameter_property" class="md-nav__link">
+    get_channel_parameter_property()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_channel_parameters" class="md-nav__link">
+    get_channel_parameters()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_crate_map" class="md-nav__link">
+    get_crate_map()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.init_system" class="md-nav__link">
+    init_system()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.set_channel_parameter" class="md-nav__link">
+    set_channel_parameter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.software_release" class="md-nav__link">
+    software_release()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers" class="md-nav__link">
+    pycaenhv.wrappers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.deinit_system" class="md-nav__link">
+    deinit_system()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_board_parameters" class="md-nav__link">
+    get_board_parameters()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_channel_parameter" class="md-nav__link">
+    get_channel_parameter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_channel_parameter_property" class="md-nav__link">
+    get_channel_parameter_property()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_channel_parameters" class="md-nav__link">
+    get_channel_parameters()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.get_crate_map" class="md-nav__link">
+    get_crate_map()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.init_system" class="md-nav__link">
+    init_system()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.set_channel_parameter" class="md-nav__link">
+    set_channel_parameter()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycaenhv.wrappers.software_release" class="md-nav__link">
+    software_release()
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="wrappers-module">Wrappers module</h1>
+<p>Wraps <code>CANEHVWrapper</code> C functions into Python functions.</p>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="pycaenhv.wrappers"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.deinit_system">
+<code class="highlight language-python"><span class="n">deinit_system</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Deinitialize system </p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">deinit_system</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Deinitialize system </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_DeinitSystem</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.get_board_parameters">
+<code class="highlight language-python"><span class="n">get_board_parameters</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>List all available board parameters</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_board_parameters</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot; List all available board parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_slot</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>  <span class="c1"># apply the appropriate type</span>
+    <span class="n">raw_param_list</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">()</span>  <span class="c1"># result will be stored here</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_GetBdParamInfo</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">_slot</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="n">raw_param_list</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">get_char_list</span><span class="p">(</span><span class="n">raw_param_list</span><span class="p">,</span> <span class="n">MAX_PARAM_NAME</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.get_channel_parameter">
+<code class="highlight language-python"><span class="n">get_channel_parameter</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Get the value of a channel <code>channel</code> parameter <code>param_name</code></p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_channel_parameter</span><span class="p">(</span>
+    <span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">slot</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c1"># channel_list: Optional[List[str]] = None,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Get the value of a channel `channel` parameter `param_name`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">type_</span> <span class="o">=</span> <span class="n">get_channel_parameter_property</span><span class="p">(</span><span class="n">handle</span><span class="o">=</span><span class="n">handle</span><span class="p">,</span>
+                                           <span class="n">slot</span><span class="o">=</span><span class="n">slot</span><span class="p">,</span>
+                                           <span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span>
+                                           <span class="n">param_name</span><span class="o">=</span><span class="n">param_name</span><span class="p">,</span>
+                                           <span class="n">prop_name</span><span class="o">=</span><span class="s2">&quot;Type&quot;</span><span class="p">)</span>
+    <span class="n">_res</span> <span class="o">=</span> <span class="n">ParameterTypes</span><span class="p">[</span><span class="n">type_</span><span class="p">]()</span>
+    <span class="n">_slot</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+    <span class="n">_param</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">(</span><span class="n">param_name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">_ch_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_ushort</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)()</span>
+    <span class="n">_ch_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span>
+
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_GetChParam</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">_slot</span><span class="p">,</span> <span class="n">_param</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">_ch_list</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="n">_res</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_res</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.get_channel_parameter_property">
+<code class="highlight language-python"><span class="n">get_channel_parameter_property</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">prop_name</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Get channel parameter's property value</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_channel_parameter_property</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                                   <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prop_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Get channel parameter&#39;s property value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Set appropriate types</span>
+    <span class="n">_slot</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+    <span class="n">_ch</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">_param</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">(</span><span class="n">param_name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">_prop</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">(</span><span class="n">prop_name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="c1"># Set the result type according to property name</span>
+    <span class="n">_res</span> <span class="o">=</span> <span class="n">PropertyTypes</span><span class="p">[</span><span class="n">prop_name</span><span class="p">]()</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_GetChParamProp</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">_slot</span><span class="p">,</span> <span class="n">_ch</span><span class="p">,</span> <span class="n">_param</span><span class="p">,</span> <span class="n">_prop</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="n">_res</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="c1"># FIX: will fail for Enum</span>
+    <span class="c1"># FIX: fails for char</span>
+    <span class="k">return</span> <span class="n">_res</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.get_channel_parameters">
+<code class="highlight language-python"><span class="n">get_channel_parameters</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>List all available board parameters</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_channel_parameters</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot; List all available board parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_slot</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+    <span class="n">_ch</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">raw_char_list</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">()</span>
+    <span class="n">_count</span> <span class="o">=</span> <span class="n">c_int</span><span class="p">()</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_GetChParamInfo</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">_slot</span><span class="p">,</span> <span class="n">_ch</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="n">raw_char_list</span><span class="p">),</span>
+                                <span class="n">byref</span><span class="p">(</span><span class="n">_count</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">_count</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">get_strlist_element</span><span class="p">(</span><span class="n">raw_char_list</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">MAX_PARAM_NAME</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.get_crate_map">
+<code class="highlight language-python"><span class="n">get_crate_map</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Get crate map</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_crate_map</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot; Get crate map</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_slots</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">()</span>
+    <span class="n">_channels</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">c_ushort</span><span class="p">)()</span>
+    <span class="n">_models</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">()</span>
+    <span class="n">_descriptions</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">()</span>
+    <span class="n">_serial_numbers</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">c_ushort</span><span class="p">)()</span>
+    <span class="n">_fw_min_rel</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">c_ubyte</span><span class="p">)()</span>
+    <span class="n">_fw_max_rel</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="n">c_ubyte</span><span class="p">)()</span>
+
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_GetCrateMap</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="n">_slots</span><span class="p">),</span> <span class="n">byref</span><span class="p">(</span><span class="n">_channels</span><span class="p">),</span>
+                             <span class="n">byref</span><span class="p">(</span><span class="n">_models</span><span class="p">),</span> <span class="n">byref</span><span class="p">(</span><span class="n">_descriptions</span><span class="p">),</span>
+                             <span class="n">byref</span><span class="p">(</span><span class="n">_serial_numbers</span><span class="p">),</span> <span class="n">byref</span><span class="p">(</span><span class="n">_fw_min_rel</span><span class="p">),</span>
+                             <span class="n">byref</span><span class="p">(</span><span class="n">_fw_max_rel</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="n">slots</span> <span class="o">=</span> <span class="n">_slots</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_channels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">slots</span><span class="p">)]</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="n">iter_str_list</span><span class="p">(</span><span class="n">_models</span><span class="p">,</span> <span class="n">slots</span><span class="p">)</span>
+    <span class="n">descriptions</span> <span class="o">=</span> <span class="n">iter_str_list</span><span class="p">(</span><span class="n">_descriptions</span><span class="p">,</span> <span class="n">slots</span><span class="p">)</span>
+    <span class="n">serial_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="n">_serial_numbers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">slots</span><span class="p">)]</span>
+    <span class="n">firmware_releases</span> <span class="o">=</span> <span class="p">[(</span><span class="n">_fw_max_rel</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">_fw_min_rel</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">slots</span><span class="p">)]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="n">slots</span><span class="p">,</span>
+                  <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span>
+                  <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span>
+                  <span class="n">descriptions</span><span class="o">=</span><span class="n">descriptions</span><span class="p">,</span>
+                  <span class="n">serial_numbers</span><span class="o">=</span><span class="n">serial_numbers</span><span class="p">,</span>
+                  <span class="n">firmware_releases</span><span class="o">=</span><span class="n">firmware_releases</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.init_system">
+<code class="highlight language-python"><span class="n">init_system</span><span class="p">(</span><span class="n">system_type</span><span class="p">,</span> <span class="n">link_type</span><span class="p">,</span> <span class="n">argument</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Initialize the system and returns the handle</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init_system</span><span class="p">(</span><span class="n">system_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">CAENHV_SYSTEM_TYPE</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+                <span class="n">link_type</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">LinkType</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+                <span class="n">argument</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                <span class="n">password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Initialize the system and returns the handle</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_handle</span> <span class="o">=</span> <span class="n">c_int</span><span class="p">()</span>
+    <span class="n">_system</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">system_type</span><span class="p">)</span>
+    <span class="n">_link</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">link_type</span><span class="p">)</span>
+    <span class="n">_arg</span> <span class="o">=</span> <span class="n">argument</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_arg</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">_arg</span> <span class="o">=</span> <span class="n">_arg</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">CAENHV_InitSystem</span><span class="p">(</span><span class="n">_system</span><span class="p">,</span> <span class="n">_link</span><span class="p">,</span> <span class="n">_arg</span><span class="p">,</span> <span class="n">username</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span>
+                            <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">byref</span><span class="p">(</span><span class="n">_handle</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_handle</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.set_channel_parameter">
+<code class="highlight language-python"><span class="n">set_channel_parameter</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Set channel parameter's value</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">set_channel_parameter</span><span class="p">(</span><span class="n">handle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">slot</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channel</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                          <span class="n">param_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Set channel parameter&#39;s value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">type_</span> <span class="o">=</span> <span class="n">get_channel_parameter_property</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span>
+                                           <span class="s2">&quot;Type&quot;</span><span class="p">)</span>
+    <span class="n">_value</span> <span class="o">=</span> <span class="n">ParameterTypes</span><span class="p">[</span><span class="n">type_</span><span class="p">](</span><span class="n">ParameterPythonTypes</span><span class="p">[</span><span class="n">type_</span><span class="p">](</span><span class="n">value</span><span class="p">))</span>
+    <span class="n">_slot</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+    <span class="n">_ch</span> <span class="o">=</span> <span class="n">c_ushort</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+    <span class="n">_param</span> <span class="o">=</span> <span class="n">c_char_p</span><span class="p">(</span><span class="n">param_name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+    <span class="n">_ch_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_ushort</span> <span class="o">*</span> <span class="mi">1</span><span class="p">)()</span>
+    <span class="n">_ch_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">channel</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">CAENHV_SetChParam</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">_slot</span><span class="p">,</span> <span class="n">_param</span><span class="p">,</span> <span class="n">_ch</span><span class="p">,</span> <span class="n">_ch_list</span><span class="p">,</span>
+                            <span class="n">byref</span><span class="p">(</span><span class="n">_value</span><span class="p">))</span>
+    <span class="n">check_function_output</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 class="doc doc-heading" id="pycaenhv.wrappers.software_release">
+<code class="highlight language-python"><span class="n">software_release</span><span class="p">()</span></code>
+
+
+</h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns the software release of the library</p>
+
+        <details class="quote">
+          <summary>Source code in <code>pycaenhv/wrappers.py</code></summary>
+          <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">software_release</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Returns the software release of the library</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">CAENHVLibSwRel</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Configuration
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.ddd52ceb.min.js"></script>
+      
+    
+  </body>
+</html>
