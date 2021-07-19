@@ -2,6 +2,8 @@
 
 This package provides access to all the CAENHVWrapper functionality in pure Python, no compilation needed.
 
+[Documentation](https://vasoto.github.io/pycaenhv/)
+
 ## Install
 
 1. Download latest version of CAENHVWrapper

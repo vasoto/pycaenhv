@@ -1,0 +1,22 @@
+# mkdocs.yml
+site_name: PyCaenHV
+theme:
+  name: "material"
+
+plugins:
+  - search
+  - mkdocstrings
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Scripts: scripts.md
+  - Configuration: configuration.md
+  - Code Reference:
+      - Context: context-reference.md
+      - Functions: functions-reference.md
+      - Wrappers: wrappers-reference.md
