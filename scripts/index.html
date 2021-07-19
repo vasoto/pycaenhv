@@ -247,6 +247,26 @@
     hvconfig
   </a>
   
+    <nav class="md-nav" aria-label="hvconfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turn-module-onoff" class="md-nav__link">
+    Turn module ON/OFF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -375,6 +395,26 @@
     hvconfig
   </a>
   
+    <nav class="md-nav" aria-label="hvconfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turn-module-onoff" class="md-nav__link">
+    Turn module ON/OFF
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -395,8 +435,24 @@
 <p>Command line tool for CAEN HV modules.</p>
 <h2 id="hvconfig">hvconfig</h2>
 <p>Configure one or many CAEN HV modules using a <code>.toml</code> configuration file.</p>
-<div class="highlight"><pre><span></span><code>hvconfig
+<div class="highlight"><pre><span></span><code>hvconfig config.toml
 </code></pre></div>
+<h3 id="usage">Usage</h3>
+<div class="highlight"><pre><span></span><code>usage: hvconfig <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--verbose<span class="o">]</span> <span class="o">[</span>-on <span class="p">|</span> -off<span class="o">]</span> CONFIGFILE
+
+Configure CAEN HV Modules
+
+positional arguments:
+  CONFIGFILE
+
+optional arguments:
+  -h, --help  show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  --verbose   verbose flag
+  -on
+  -off
+</code></pre></div>
+<h3 id="turn-module-onoff">Turn module ON/OFF</h3>
+<p>This command can be used to turn or on off the modules declared in the configuration file. this can be done by using the <code>-on</code> or <code>-off</code> arguments.</p>
                 
               
               
