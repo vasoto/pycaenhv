@@ -5,8 +5,7 @@ from ..wrappers import get_channel_parameter, set_channel_parameter
 
 
 class ChannelParameter:
-    def __init__(self, channel: "Channel", name: str,
-                 attributes: Dict) -> None:
+    def __init__(self, channel, name: str, attributes: Dict) -> None:
         self.channel = channel
         self.name = name
         self.attributes = attributes
