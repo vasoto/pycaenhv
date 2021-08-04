@@ -68,6 +68,13 @@ def bitfield(n) -> List[int]:
             for digit in bin(n)[2:]]  # [2:] to chop off the "0b" part
 
 
+def status_unpack(status: int) -> List[str]:
+    mask = bitfield(status)
+    # Pad with 0s
+    mask = [0] * (len(ChannelStatusLabels) - len(mask)) + mask
+    return list(compress(reversed(ChannelStatusLabels), mask))
+
+
 def normalize_channel_info(name, info: Dict[str, Any]) -> Dict[str, Any]:
     min_ = info['properties'].get('Minval', '')
     max_ = info['properties'].get('Maxval', '')
@@ -77,8 +84,7 @@ def normalize_channel_info(name, info: Dict[str, Any]) -> Dict[str, Any]:
         max_ = True
         value = bool(value)
     elif info['type'] == 2:
-        mask = bitfield(value)
-        value = list(compress(ChannelStatusLabels, mask))
+        value = status_unpack(value)
     unit_exp = par.ExpShortValues[info['properties'].get('Exp', 0)]
     unit = par.UnitShortValues[info['properties'].get('Unit', 0)]
     return dict(
