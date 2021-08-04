@@ -194,16 +194,14 @@ def set_channel_name(handle: int, slot: int, channel: int, name: str) -> None:
     _ch = c_ushort(channel)
     _name= c_char_p(name.encode())
     _ch_list = _create_channel_list(channel)
-    print(f"Setting to {name}")
     res = CAENHV_SetChName(handle,
         _slot,
         1,
-        # byref(_ch),
-    _ch_list,
+        byref(_ch),
+        # _ch_list,
         _name)
     check_function_output(res)
-    print(res)
-    print("Setting is done!")
+
 
 
 
