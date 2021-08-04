@@ -89,8 +89,8 @@ def channels():
 @click.pass_obj
 def info(hv, slot: int, channel: int, use_json):
     with hv as cntx:
-        info = channel_info(handle=cntx.handle, slot=slot, channel=channel)
         if channel is not None:
+            info = channel_info(handle=cntx.handle, slot=slot, channel=channel)
             if use_json:
                 result = dict(channel=channel, slot=slot, parameters=info)
                 print(json.dumps(result, indent=4, sort_keys=True))
