@@ -48,7 +48,7 @@ def check_function_output(command_output: int,
     if command_output != 0:
         err_msg = Errors[command_output]
         if should_raise:
-            raise CAENHVError(Errors[command_output])
+            raise CAENHVError(err_msg)
         print(f"Error: {err_msg}")
         return False
     return True
