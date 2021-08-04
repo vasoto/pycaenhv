@@ -1,4 +1,7 @@
+from itertools import compress
 from typing import Any, Dict, List
+
+from pycaenhv.constants import ChannelStatusLabels
 
 from . import parameters as par
 from .wrappers import get_channel_parameter, get_channel_parameter_property, get_channel_parameters
@@ -56,12 +59,16 @@ def get_parameter_information(handle: int, slot: int, channel: int,
     return result
 
 
-def bitfield(n):
+def bitfield_int(n) -> List[int]:
+    return [n >> i & 1 for i in range(n.bit_length() - 1, -1, -1)]
+
+
+def bitfield(n) -> List[int]:
     return [1 if digit == '1' else 0
             for digit in bin(n)[2:]]  # [2:] to chop off the "0b" part
 
 
-def normalize_cahnnel_info(name, info: Dict[str, Any]) -> Dict[str, Any]:
+def normalize_channel_info(name, info: Dict[str, Any]) -> Dict[str, Any]:
     min_ = info['properties'].get('Minval', '')
     max_ = info['properties'].get('Maxval', '')
     value = info['value']
@@ -70,7 +77,8 @@ def normalize_cahnnel_info(name, info: Dict[str, Any]) -> Dict[str, Any]:
         max_ = True
         value = bool(value)
     elif info['type'] == 2:
-        value = bitfield(value)
+        mask = bitfield(value)
+        value = list(compress(ChannelStatusLabels, mask))
     unit_exp = par.ExpShortValues[info['properties'].get('Exp', 0)]
     unit = par.UnitShortValues[info['properties'].get('Unit', 0)]
     return dict(
@@ -91,10 +99,7 @@ def channel_info(handle: int, slot: int, channel: int) -> List:
     for param in parameters:
         param_info = get_parameter_information(handle, slot, channel, param)
 
-        result.append(normalize_cahnnel_info(param, param_info))
-        # formatter = ParameterDecoder.get(param_info['type'], lambda a: a)
-        # print(param_info)
-        # print(param, formatter(param_info))
+        result.append(normalize_channel_info(param, param_info))
     return result
 
 
