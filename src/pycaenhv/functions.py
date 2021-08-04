@@ -2,11 +2,55 @@ from ctypes import POINTER, c_char_p, c_int, c_ushort, c_ubyte, c_void_p
 
 from ._lib import load_lib
 from .utils import export_func
+from .constants import MAX_CH_NAME
 
 P = POINTER
 c_int_p = POINTER(c_int)
 
 lib = load_lib()
+
+# CAENHVLIB_API char *CAENHV_GetError(int handle);
+
+CAENHV_GetError = export_func(lib, 'CAENHV_GetError', c_char_p, [c_int], 'Get error')
+
+# CAENHVLIB_API CAENHVRESULT  CAENHV_GetChName(int handle, ushort slot,
+#  ushort ChNum, const ushort *ChList, char (*ChNameList)[MAX_CH_NAME]);
+NamesArrayType = P(c_char_p*MAX_CH_NAME)
+
+CAENHV_GetChName = export_func(
+    lib,
+    'CAENHV_GetChName',
+    c_int,
+    [
+        c_int,  # handle
+        c_ushort,  # slot
+        c_ushort,  # ChNum
+        P(c_ushort),  # ChList
+        # P(c_char_p) # ChNameList
+
+        NamesArrayType
+        # c_void_p
+
+    ])
+
+
+# CAENHVLIB_API CAENHVRESULT  CAENHV_SetChName(int handle, ushort slot,
+#  ushort ChNum, const ushort *ChList, const char *ChName)
+
+CAENHV_SetChName = export_func(lib,
+                               'CAENHV_SetChName',
+                               c_int,
+                               [
+                                c_int, # handle
+                                c_ushort, # slot
+                               c_ushort, # ChNum
+                               P(c_ushort), # ChList
+                               c_char_p # ChName
+                               ],
+                               "Set Channel Name"
+)
+""" Set Channel Name
+"""
 
 # Software release
 # CAENHVLIB_API char* CAENHVLibSwRel(void)

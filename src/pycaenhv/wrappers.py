@@ -1,15 +1,26 @@
-from ctypes import byref, c_int, c_ubyte, c_ushort, c_char_p, POINTER as P
+from ctypes import byref, c_int, c_ubyte, c_ushort, c_char_p, POINTER as P, cast, create_string_buffer, addressof
 from typing import List, Union, Any, Optional, Dict
 
 from .errors import check_function_output
 from .enums import CAENHV_SYSTEM_TYPE, LinkType
 from .utils import get_char_list, get_strlist_element, iter_str_list
-from .constants import MAX_PARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME
+from .constants import MAX_PARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME, MAX_CH_NAME
 from .parameters import PropertyTypes, ParameterTypes, ParameterPythonTypes
 from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
     CAENHV_InitSystem, CAENHV_DeinitSystem, CAENHV_GetChParamInfo, \
     CAENHV_GetChParamProp, CAENHV_GetChParam, CAENHV_GetCrateMap, \
-    CAENHV_SetChParam
+    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError
+
+
+def _create_channel_list(channel: int)->Any:
+    """ Create and fill channel list for a given module, identified by `slot`
+    """
+    # num_channels = get_crate_map(handle)['channels'][slot]
+    _ch_list = (c_ushort * 1)()
+    _ch_list[0] = channel
+    # for i in range(num_channels):
+    #     _ch_list[i] = i
+    return _ch_list
 
 
 def software_release() -> str:
@@ -107,11 +118,17 @@ def get_channel_parameter(
                                            prop_name="Type")
     _res = ParameterTypes[type_]()
     _slot = c_ushort(slot)
+    _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
-    _ch_list = (c_ushort * 1)()
-    _ch_list[0] = channel
-
-    err = CAENHV_GetChParam(handle, _slot, _param, 1, _ch_list, byref(_res))
+    # _ch_list = _create_channel_list(channel)
+    err = CAENHV_GetChParam(
+        handle,
+        _slot,
+        _param,
+        1,
+        # _ch_list,
+        byref(_ch),
+        byref(_res))
     check_function_output(err)
 
     return _res.value
@@ -150,7 +167,7 @@ def get_crate_map(handle: int) -> Dict[str, Any]:
 
 
 def set_channel_parameter(handle: int, slot: int, channel: int,
-                          param_name: str, value: Any):
+                          param_name: str, value: Any) -> None:
     """ Set channel parameter's value
     """
     type_ = get_channel_parameter_property(handle, slot, channel, param_name,
@@ -159,8 +176,45 @@ def set_channel_parameter(handle: int, slot: int, channel: int,
     _slot = c_ushort(slot)
     _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
-    _ch_list = (c_ushort * 1)()
-    _ch_list[0] = channel
-    res = CAENHV_SetChParam(handle, _slot, _param, _ch, _ch_list,
+    # _ch_list = _create_channel_list(channel)
+    res = CAENHV_SetChParam(handle,
+                            _slot,
+                            _param,
+                            1,
+                            #_ch_list,
+                            byref(_ch),
                             byref(_value))
     check_function_output(res)
+
+
+def set_channel_name(handle: int, slot: int, channel: int, name: str) -> None:
+    """ Set channel name
+    """
+    _slot = c_ushort(slot)
+    _ch = c_ushort(channel)
+    _name= c_char_p(name.encode())
+    _ch_list = _create_channel_list(channel)
+    print(f"Setting to {name}")
+    res = CAENHV_SetChName(handle,
+        _slot,
+        1,
+        # byref(_ch),
+    _ch_list,
+        _name)
+    check_function_output(res)
+    print(res)
+    print("Setting is done!")
+
+
+
+def get_channel_name(handle: int, slot: int, channel: int) -> str:
+    """ Set channel name
+    """
+    # https://stackoverflow.com/questions/16699800/python-using-ctypes-to-pass-a-char-array-and-populate-results
+    name = create_string_buffer(MAX_CH_NAME)
+    name_ptr = cast(name, P(c_char_p*MAX_CH_NAME))
+
+    ch_ = c_ushort(channel)
+    res = CAENHV_GetChName(handle, slot, 1, byref(ch_), name_ptr)
+    check_function_output(res)
+    return name.value.decode()
