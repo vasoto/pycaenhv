@@ -1,24 +1,28 @@
-from typing import List, Any
-
+from typing import Any
 from ..wrappers import get_crate_map, init_system, deinit_system
 from ..enums import CAENHV_SYSTEM_TYPE, LinkType
-from ._channel import Channel
+from ._board import CaenHVBoard
 
 
 class CaenHVModule:
-    """ Represents a single CAEN HV/LV Module in a crate, determined by `slot`
+    """ CAEN Crate module
     """
     def __init__(self):
-        self.handle: int = None
-        self.model: str = ''
-        self.slot = -1
-        self.channels: List[Channel] = list()
+        self.handle: int = -1
+        self.boards = dict()
         self.connected: bool = False
+
+    def __del__(self):
+        self.disconnect()
+
+    def is_connected(self) -> bool:
+        """ Connection status
+        """
+        return self.connected
 
     def connect(self,
                 system: str,
                 link: str,
-                slot: int,
                 argument: Any,
                 user: str = '',
                 password: str = '') -> None:
@@ -31,13 +35,19 @@ class CaenHVModule:
                                   argument=argument,
                                   username=user,
                                   password=password)
+        # Get crate mapping
+        self.mapping = get_crate_map(self.handle)
+        for slot, ch_num in enumerate(self.mapping['channels']):
+            if ch_num:
+                self.boards[slot] = CaenHVBoard(
+                    self,
+                    slot=slot,
+                    num_channels=ch_num,
+                    model=self.mapping['models'][slot],
+                    serial_number=self.mapping['serial_numbers'][slot],
+                    description=self.mapping['descriptions'][slot],
+                    firmware_release=self.mapping['firmware_releases'][slot])
 
-        self.slot = slot
-        mapping = get_crate_map(self.handle)
-        num_channels = mapping['channels'][self.slot]
-        # Populate channels information
-        self.channels = [Channel(self, ch) for ch in range(num_channels)]
-        self.model = mapping['models'][self.slot]
         self.connected = True
 
     def disconnect(self) -> None:

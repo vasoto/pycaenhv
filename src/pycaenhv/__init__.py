@@ -6,4 +6,4 @@ from .helpers import *
 from .functions import *
 from .wrappers import *
 from .enums import CAENHV_SYSTEM_TYPE, LinkType
-from .module import CaenHVModule, Channel, ChannelParameter
+from .module import CaenHVModule, CaenHVBoard, Channel, ChannelParameter

@@ -5,9 +5,12 @@ from ..wrappers import get_channel_parameter, set_channel_parameter
 
 
 class ChannelParameter:
+    """ Parameter of CAEN HV/LV board channel
+    """
     def __init__(self, channel, name: str, attributes: Dict) -> None:
         self.channel = channel
         self.name = name
+        # Set available attributes for a given parameter
         self.attributes = attributes
         # Remove duplicated or static info
         if 'value' in self.attributes:
@@ -23,6 +26,8 @@ class ChannelParameter:
 
     @property
     def value(self) -> Any:
+        """ Reads (if possible) the value of a parameter from the board's channel
+        """
         if 'R' in self.attributes['mode']:
             return get_channel_parameter(self.channel.module.handle,
                                          self.channel.module.slot,
@@ -33,6 +38,8 @@ class ChannelParameter:
 
     @value.setter
     def value(self, value: Any) -> None:
+        """ Writes (if possible) parameter value to the board
+        """
         if 'W' in self.attributes['mode']:
             if value > self.attributes['max']:
                 raise ValueError(
@@ -52,7 +59,7 @@ class ChannelParameter:
                 f"Trying to write read-only parameter {self.name}")
 
     def __getattr__(self, name: str) -> Any:
-        """
+        """ Dynamically reads preset attributes
         """
         if name in self.attributes:
             return self.attributes[name]

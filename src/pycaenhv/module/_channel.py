@@ -4,13 +4,13 @@ from typing import Any, List
 
 from pycaenhv.constants import ChannelStatusLabels
 
-from ..helpers import bitfield, channel_info
+from ..helpers import bitfield, channel_info, status_unpack
 from ..wrappers import get_channel_name, get_channel_parameter, set_channel_name
 from ._channel_parameter import ChannelParameter
 
 
 class Channel:
-    """ Channel in a CAEN HV/LV module
+    """ Channel in a CAEN HV/LV board
     """
     def __init__(self, module, index: int):
         self.module = module
@@ -35,12 +35,12 @@ class Channel:
 
     @property
     def status(self) -> List[str]:
+        """ Decodes channel status
+        """
         status_raw: int = get_channel_parameter(self.module.handle,
                                                 self.module.slot, self.index,
                                                 'Status')
-        mask = bitfield(status_raw)
-        value = compress(ChannelStatusLabels, mask)
-        return list(value)
+        return status_unpack(status_raw)
 
     @property
     def name(self) -> str:
