@@ -5,7 +5,7 @@ from typing import Any, List
 from pycaenhv.constants import ChannelStatusLabels
 
 from ..helpers import bitfield, channel_info, status_unpack
-from ..wrappers import get_channel_name, get_channel_parameter, set_channel_name
+from ..wrappers import get_channel_name, get_channel_parameter, set_channel_name, set_channel_parameter
 from ._channel_parameter import ChannelParameter
 
 
@@ -57,6 +57,30 @@ class Channel:
                          name)
         # TODO: check if value is set
         sleep(0.5)
+
+    def toggle(self, flag: bool) -> None:
+        """ Toggle on or off
+        """
+        set_channel_parameter(self.module.handle, self.module.slot, self.index,
+                              'Pw', int(flag))
+        # TODO: wait until finished
+
+    def switch_on(self) -> None:
+        """ switch the channel ON
+        """
+        self.toggle(True)
+
+    def switch_off(self) -> None:
+        """ switch the channel OFF
+        """
+        self.toggle(False)
+
+    def is_powered(self) -> bool:
+        """ Returns True if the channel is ON, False otherwise
+        """
+        res = get_channel_parameter(self.module.handle, self.module.slot,
+                                    self.index, 'Pw')
+        return bool(res)
 
     def __getattr__(self, name: str) -> Any:
         """ Dynamically get attributes
