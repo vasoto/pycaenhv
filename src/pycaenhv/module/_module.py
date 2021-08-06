@@ -1,5 +1,5 @@
 from typing import Any
-from ..wrappers import get_crate_map, init_system, deinit_system
+from ..wrappers import exec_command, get_crate_map, init_system, deinit_system, list_commands
 from ..enums import CAENHV_SYSTEM_TYPE, LinkType
 from ._board import CaenHVBoard
 
@@ -19,6 +19,26 @@ class CaenHVModule:
         """ Connection status
         """
         return self.connected
+
+    def command(self, command: str) -> None:
+        """ Execute command
+        """
+        available_commands = list_commands(self.handle)
+        if command not in available_commands:
+            raise ValueError(
+                f"Command '{command}' is not supported. "
+                f"Supported comands are {', '.join(available_commands)}")
+        exec_command(self.handle, command)
+
+    def clear_alarm(self):
+        """ Send `ClearAlarm` command
+        """
+        self.command('ClearAlarm')
+
+    def kill(self):
+        """ Send `Kill` command to all channels
+        """
+        self.command('Kill')
 
     def connect(self,
                 system: str,
