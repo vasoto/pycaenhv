@@ -12,7 +12,7 @@ from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
     CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError
 
 
-def _create_channel_list(channel: int)->Any:
+def _create_channel_list(channel: int) -> Any:
     """ Create and fill channel list for a given module, identified by `slot`
     """
     # num_channels = get_crate_map(handle)['channels'][slot]
@@ -177,13 +177,14 @@ def set_channel_parameter(handle: int, slot: int, channel: int,
     _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
     # _ch_list = _create_channel_list(channel)
-    res = CAENHV_SetChParam(handle,
-                            _slot,
-                            _param,
-                            1,
-                            #_ch_list,
-                            byref(_ch),
-                            byref(_value))
+    res = CAENHV_SetChParam(
+        handle,
+        _slot,
+        _param,
+        1,
+        #_ch_list,
+        byref(_ch),
+        byref(_value))
     check_function_output(res)
 
 
@@ -192,9 +193,10 @@ def set_channel_name(handle: int, slot: int, channel: int, name: str) -> None:
     """
     _slot = c_ushort(slot)
     _ch = c_ushort(channel)
-    _name= c_char_p(name.encode())
+    _name = c_char_p(name.encode())
     _ch_list = _create_channel_list(channel)
-    res = CAENHV_SetChName(handle,
+    res = CAENHV_SetChName(
+        handle,
         _slot,
         1,
         byref(_ch),
@@ -203,14 +205,12 @@ def set_channel_name(handle: int, slot: int, channel: int, name: str) -> None:
     check_function_output(res)
 
 
-
-
 def get_channel_name(handle: int, slot: int, channel: int) -> str:
     """ Set channel name
     """
     # https://stackoverflow.com/questions/16699800/python-using-ctypes-to-pass-a-char-array-and-populate-results
     name = create_string_buffer(MAX_CH_NAME)
-    name_ptr = cast(name, P(c_char_p*MAX_CH_NAME))
+    name_ptr = cast(name, P(c_char_p * MAX_CH_NAME))
 
     ch_ = c_ushort(channel)
     res = CAENHV_GetChName(handle, slot, 1, byref(ch_), name_ptr)

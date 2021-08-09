@@ -1,4 +1,7 @@
 from typing import Any, Optional, List
+import os
+
+PYCAENHV_NOLIB = os.environ.get('PYCAENHV_NOLIB', False)
 
 
 def export_func(lib: Any,
@@ -8,6 +11,10 @@ def export_func(lib: Any,
                 doc_str: str = None) -> Any:
     """ Export function from dll `lib`
     """
+    if PYCAENHV_NOLIB and lib is None:
+        # Allow running without libcaenhvwrapper.so being available on the system
+        # i.e. testing or documentation generation
+        return None
     func_ = getattr(lib, function_name)
     if arguments:
         func_.argtypes = arguments
