@@ -1,4 +1,4 @@
-from ctypes import byref, c_int, c_ubyte, c_ushort, c_char_p, POINTER as P, cast, create_string_buffer, addressof
+from ctypes import byref, c_char, c_int, c_ubyte, c_uint, c_ushort, c_char_p, POINTER as P, cast, create_string_buffer, addressof
 from typing import List, Union, Any, Optional, Dict
 
 from .errors import check_function_output
@@ -9,10 +9,32 @@ from .parameters import PropertyTypes, ParameterTypes, ParameterPythonTypes
 from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
     CAENHV_InitSystem, CAENHV_DeinitSystem, CAENHV_GetChParamInfo, \
     CAENHV_GetChParamProp, CAENHV_GetChParam, CAENHV_GetCrateMap, \
-    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError
+    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError, CAENHV_ExecComm, CAENHV_GetExecCommList
+
+__all__ = [
+    'software_release', 'init_system', 'set_channel_name', 'get_channel_name'
+]
 
 
-def _create_channel_list(channel: int)->Any:
+def list_commands(handle: int) -> List[str]:
+    """ Returns a list of available commands
+    """
+    commands_count = c_ushort()
+    cmds = P(c_char)()
+    res = CAENHV_GetExecCommList(handle, byref(commands_count), byref(cmds))
+    check_function_output(res)
+    return iter_str_list(cmds, commands_count.value)
+
+
+def exec_command(handle: int, command: str) -> None:
+    """ Executes a command
+    """
+
+    res = CAENHV_ExecComm(handle, c_char_p(command.encode()))
+    check_function_output(res)
+
+
+def _create_channel_list(channel: int) -> Any:
     """ Create and fill channel list for a given module, identified by `slot`
     """
     # num_channels = get_crate_map(handle)['channels'][slot]
@@ -177,13 +199,14 @@ def set_channel_parameter(handle: int, slot: int, channel: int,
     _ch = c_ushort(channel)
     _param = c_char_p(param_name.encode())
     # _ch_list = _create_channel_list(channel)
-    res = CAENHV_SetChParam(handle,
-                            _slot,
-                            _param,
-                            1,
-                            #_ch_list,
-                            byref(_ch),
-                            byref(_value))
+    res = CAENHV_SetChParam(
+        handle,
+        _slot,
+        _param,
+        1,
+        #_ch_list,
+        byref(_ch),
+        byref(_value))
     check_function_output(res)
 
 
@@ -192,9 +215,10 @@ def set_channel_name(handle: int, slot: int, channel: int, name: str) -> None:
     """
     _slot = c_ushort(slot)
     _ch = c_ushort(channel)
-    _name= c_char_p(name.encode())
+    _name = c_char_p(name.encode())
     _ch_list = _create_channel_list(channel)
-    res = CAENHV_SetChName(handle,
+    res = CAENHV_SetChName(
+        handle,
         _slot,
         1,
         byref(_ch),
@@ -203,14 +227,12 @@ def set_channel_name(handle: int, slot: int, channel: int, name: str) -> None:
     check_function_output(res)
 
 
-
-
 def get_channel_name(handle: int, slot: int, channel: int) -> str:
     """ Set channel name
     """
     # https://stackoverflow.com/questions/16699800/python-using-ctypes-to-pass-a-char-array-and-populate-results
     name = create_string_buffer(MAX_CH_NAME)
-    name_ptr = cast(name, P(c_char_p*MAX_CH_NAME))
+    name_ptr = cast(name, P(c_char_p * MAX_CH_NAME))
 
     ch_ = c_ushort(channel)
     res = CAENHV_GetChName(handle, slot, 1, byref(ch_), name_ptr)
