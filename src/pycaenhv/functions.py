@@ -1,4 +1,4 @@
-from ctypes import POINTER, c_char_p, c_int, c_ushort, c_ubyte, c_void_p
+from ctypes import POINTER, c_char, c_char_p, c_int, c_ushort, c_ubyte, c_void_p
 
 from ._lib import load_lib
 from .utils import export_func
@@ -11,11 +11,12 @@ lib = load_lib()
 
 # CAENHVLIB_API char *CAENHV_GetError(int handle);
 
-CAENHV_GetError = export_func(lib, 'CAENHV_GetError', c_char_p, [c_int], 'Get error')
+CAENHV_GetError = export_func(lib, 'CAENHV_GetError', c_char_p, [c_int],
+                              'Get error')
 
 # CAENHVLIB_API CAENHVRESULT  CAENHV_GetChName(int handle, ushort slot,
 #  ushort ChNum, const ushort *ChList, char (*ChNameList)[MAX_CH_NAME]);
-NamesArrayType = P(c_char_p*MAX_CH_NAME)
+NamesArrayType = P(c_char_p * MAX_CH_NAME)
 
 CAENHV_GetChName = export_func(
     lib,
@@ -27,31 +28,73 @@ CAENHV_GetChName = export_func(
         c_ushort,  # ChNum
         P(c_ushort),  # ChList
         # P(c_char_p) # ChNameList
-
         NamesArrayType
         # c_void_p
-
     ])
-
 
 # CAENHVLIB_API CAENHVRESULT  CAENHV_SetChName(int handle, ushort slot,
 #  ushort ChNum, const ushort *ChList, const char *ChName)
 
-CAENHV_SetChName = export_func(lib,
-                               'CAENHV_SetChName',
-                               c_int,
-                               [
-                                c_int, # handle
-                                c_ushort, # slot
-                               c_ushort, # ChNum
-                               P(c_ushort), # ChList
-                               c_char_p # ChName
-                               ],
-                               "Set Channel Name"
-)
+CAENHV_SetChName = export_func(
+    lib,
+    'CAENHV_SetChName',
+    c_int,
+    [
+        c_int,  # handle
+        c_ushort,  # slot
+        c_ushort,  # ChNum
+        P(c_ushort),  # ChList
+        c_char_p  # ChName
+    ],
+    "Set Channel Name")
 """ Set Channel Name
 """
 
+CAENHV_GetExecCommList = export_func(
+    lib,
+    'CAENHV_GetExecCommList',
+    c_int,
+    [
+        c_int,  # handle
+        P(c_ushort),  # NummComm
+        P(P(c_char))  # CommNameList
+    ])
+"""
+Get the list of availble commands to execute.
+
+* `handle` - Handle returned by the CAENHV_InitSystem function
+* `NummComm` - Number of commands in the list
+* `CommNameList` - List of the possible commands to send to the system. Memory pointed by `CommNameList` must be deallocated by the user.
+
+### C Function Signature
+
+```C
+CAENHVLIB_API CAENHVRESULT  CAENHV_GetExecCommList(
+    int handle,
+    ushort *NumComm,
+    char **CommNameList);
+```
+"""
+CAENHV_ExecComm = export_func(
+    lib,
+    'CAENHV_ExecComm',
+    c_int,  # result
+    [
+        c_int,  # handle
+        c_char_p  # command
+    ])
+"""
+Execute command
+
+* `handle` - handle to module
+* `CommName` - command name. For full list of commands for a given board see `CAENHV_GetExecCommList`.
+
+### C Function Signature
+
+```C
+CAENHVLIB_API CAENHVRESULT  CAENHV_ExecComm(int handle, const char *CommName);
+```
+"""
 # Software release
 # CAENHVLIB_API char* CAENHVLibSwRel(void)
 CAENHVLibSwRel = export_func(lib,
