@@ -42,7 +42,7 @@ Errors = {
 
 
 def check_function_output(command_output: int,
-                          should_raise: bool = False) -> bool:
+                          should_raise: bool = True) -> bool:
     """ Checks the output of CAEN HV command and print error message
     """
     if command_output != 0:
