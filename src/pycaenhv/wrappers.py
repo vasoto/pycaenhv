@@ -4,12 +4,13 @@ from typing import List, Union, Any, Optional, Dict
 from .errors import check_function_output
 from .enums import CAENHV_SYSTEM_TYPE, LinkType
 from .utils import get_char_list, get_strlist_element, iter_str_list
-from .constants import MAX_PARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME, MAX_CH_NAME
+from .constants import MAX_PARAM_NAME, MAX_SYSPARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME, MAX_CH_NAME
 from .parameters import PropertyTypes, ParameterTypes, ParameterPythonTypes
 from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
     CAENHV_InitSystem, CAENHV_DeinitSystem, CAENHV_GetChParamInfo, \
     CAENHV_GetChParamProp, CAENHV_GetChParam, CAENHV_GetCrateMap, \
-    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError, CAENHV_ExecComm, CAENHV_GetExecCommList
+    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError, \
+    CAENHV_ExecComm, CAENHV_GetExecCommList, CAENHV_TestBdPresence, CAENHV_GetSysProp, CAENHV_GetSysPropList
 
 __all__ = [
     'software_release', 'init_system', 'set_channel_name', 'get_channel_name'
@@ -154,6 +155,34 @@ def get_channel_parameter(
     check_function_output(err)
 
     return _res.value
+
+
+def get_module_swrelease(
+    handle: int,
+) -> str:
+    """ Get the sw release of the module parameter `SwRelease`
+    """
+    _res = c_char()
+    _param = c_char_p("SwRelease".encode())
+    err = CAENHV_GetSysProp(
+        handle,
+        _param,
+        byref(_res))
+    check_function_output(err)
+    return _res.value
+
+
+def get_module_parameters(handle: int) -> List[str]:
+    """ List all available board parameters
+    """
+    raw_char_list = c_char_p()
+    _count = c_int()
+    err = CAENHV_GetSysPropList(handle, byref(_count), byref(raw_char_list))
+    check_function_output(err)
+    count = _count.value
+    result = iter_str_list(raw_char_list, count)
+    print(result)
+    return result
 
 
 def get_crate_map(handle: int) -> Dict[str, Any]:
