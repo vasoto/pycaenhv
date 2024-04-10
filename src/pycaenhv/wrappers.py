@@ -200,14 +200,52 @@ def get_crate_map(handle: int) -> Dict[str, Any]:
                              byref(_models), byref(_descriptions),
                              byref(_serial_numbers), byref(_fw_min_rel),
                              byref(_fw_max_rel))
-    check_function_output(err)
-    slots = _slots.value
-    channels = [_channels[i] for i in range(slots)]
-    models = iter_str_list(_models, slots)
-    descriptions = iter_str_list(_descriptions, slots)
-    serial_numbers = [_serial_numbers[i] for i in range(slots)]
-    firmware_releases = [(_fw_max_rel[i], _fw_min_rel[i])
-                         for i in range(slots)]
+    if check_function_output(err, should_raise=False):
+        # no error, GetCrateMap worked
+        slots = _slots.value
+        channels = [_channels[i] for i in range(slots)]
+        models = iter_str_list(_models, slots)
+        descriptions = iter_str_list(_descriptions, slots)
+        serial_numbers = [_serial_numbers[i] for i in range(slots)]
+        firmware_releases = [(_fw_max_rel[i], _fw_min_rel[i])
+                             for i in range(slots)]
+    else:
+        # error; could be connection or a bug in the lib (v6.3).
+        # let's try to brute force the map instead
+        print("GetCrateMap failed, trying to determine crate configuration slot by slot (max 4 slots assumed).")
+        slots = 4
+        channels = []
+        models = []
+        descriptions = []
+        serial_numbers = []
+        firmware_releases = []
+        for slot in range(slots):
+            _channels = c_ushort()
+            _model = P(c_char)()
+            _description = P(c_char)()
+            _serial_number = c_ushort()
+            _fw_min_rel = c_ubyte()
+            _fw_max_rel = c_ubyte()
+            err = CAENHV_TestBdPresence(handle, slot, byref(_channels), byref(_model),
+                                        byref(_description), byref(_serial_number), byref(_fw_min_rel), byref(_fw_max_rel))
+            if not err == 0:
+                # no board present at this slot
+                channels.append(0)
+                models.append("")
+                descriptions.append("")
+                serial_numbers.append(0)
+                firmware_releases.append((0,0))
+                continue
+            model = get_strlist_element(_model, 0, 100)
+            description = get_strlist_element(_description, 0, 100)
+            fw = (_fw_max_rel.value, _fw_min_rel.value)
+            nch = _channels.value
+            serno = _serial_number.value
+            channels.append(nch)
+            models.append(model)
+            descriptions.append(description)
+            serial_numbers.append(serno)
+            firmware_releases.append(fw)
     result = dict(slots=slots,
                   channels=channels,
                   models=models,
