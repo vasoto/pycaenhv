@@ -33,3 +33,8 @@ class CaenHVBoard:
         # Get the number of channels for this board
         # Populate channels information
         self.channels = [Channel(self, ch) for ch in range(self.num_channels)]
+
+    def __str__(self):
+        """Pretty-print the module information"""
+        fw = f"{self.firmware_release[0]}.{self.firmware_release[1]}"
+        return f"{self.slot} -- {self.model}, {self.description} ({self.serial_number}/FW {fw}): {self.num_channels} channels"
