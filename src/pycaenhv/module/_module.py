@@ -104,6 +104,7 @@ class CaenHVModule:
     def __enter__(self):
         """Acquire the lock to prevent the keep-alive thread from interfering."""
         self._lock.acquire()
+        return self
 
     def __exit__(self, exc_type, exc_value, exc_tb):
         """Release the lock to allow the keep-alive thread from continuing."""
