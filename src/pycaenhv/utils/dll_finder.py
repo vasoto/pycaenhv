@@ -1,20 +1,34 @@
 from glob import glob
 from pathlib import Path
 import os
+import platform
 from typing import List, Union, Optional
 
-SEARCH_DIRECTORIES = [
-    '/lib', '/lib64', '/usr/lib', '/usr/lib64', '/usr/local/lib',
-    '/usr/local/lib64', '~/local/lib', '~/local/lib64'
-]
+if platform.system() == 'Windows':
 
-search_pattern = 'libcaenhvwrapper.so*'
+    SEARCH_DIRECTORIES = [
+        'C:\Windows\System32'
+    ]
+
+    search_pattern = 'CAENHVWrapper.dll'
+
+elif platform.system() == 'Linux':
+    SEARCH_DIRECTORIES = [
+        '/lib', '/lib64', '/usr/lib', '/usr/lib64', '/usr/local/lib',
+        '/usr/local/lib64', '~/local/lib', '~/local/lib64'
+    ]
+
+    search_pattern = 'libcaenhvwrapper.so*'
+
+else:
+    print('Operating system not supported')
+
 
 
 def find_dll(
         extra_dirs: Optional[List[Union[str,
                                         Path]]] = None) -> Union[Path, None]:
-    """ Search for libcaenhvwrapper.so* in known places
+    """ Search for CAENHVWrapper in known places
     """
     _search_dirs = SEARCH_DIRECTORIES + []
     if os.environ.get('LD_LIBRARY_PATH', None):
