@@ -53,7 +53,7 @@ class ChannelParameter:
                                   self.channel.module.slot, self.channel.index,
                                   self.name, value)
             # TODO: Implement wait until param is set
-            time.sleep(1)
+            time.sleep(0.1)
         else:
             raise ValueError(
                 f"Trying to write read-only parameter {self.name}")

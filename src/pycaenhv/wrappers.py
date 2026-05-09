@@ -4,12 +4,13 @@ from typing import List, Union, Any, Optional, Dict
 from .errors import check_function_output
 from .enums import CAENHV_SYSTEM_TYPE, LinkType
 from .utils import get_char_list, get_strlist_element, iter_str_list
-from .constants import MAX_PARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME, MAX_CH_NAME
+from .constants import MAX_PARAM_NAME, MAX_SYSPARAM_NAME, MAX_BOARD_DESC, MAX_BOARD_NAME, MAX_CH_NAME
 from .parameters import PropertyTypes, ParameterTypes, ParameterPythonTypes
 from .functions import CAENHVLibSwRel, CAENHV_GetBdParamInfo, \
     CAENHV_InitSystem, CAENHV_DeinitSystem, CAENHV_GetChParamInfo, \
     CAENHV_GetChParamProp, CAENHV_GetChParam, CAENHV_GetCrateMap, \
-    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError, CAENHV_ExecComm, CAENHV_GetExecCommList
+    CAENHV_SetChParam, CAENHV_SetChName, CAENHV_GetChName, CAENHV_GetError, \
+    CAENHV_ExecComm, CAENHV_GetExecCommList, CAENHV_TestBdPresence, CAENHV_GetSysProp, CAENHV_GetSysPropList
 
 __all__ = [
     'software_release', 'init_system', 'set_channel_name', 'get_channel_name'
@@ -156,6 +157,34 @@ def get_channel_parameter(
     return _res.value
 
 
+def get_module_swrelease(
+    handle: int,
+) -> str:
+    """ Get the sw release of the module parameter `SwRelease`
+    """
+    _res = c_char()
+    _param = c_char_p("SwRelease".encode())
+    err = CAENHV_GetSysProp(
+        handle,
+        _param,
+        byref(_res))
+    check_function_output(err)
+    return _res.value
+
+
+def get_module_parameters(handle: int) -> List[str]:
+    """ List all available board parameters
+    """
+    raw_char_list = c_char_p()
+    _count = c_int()
+    err = CAENHV_GetSysPropList(handle, byref(_count), byref(raw_char_list))
+    check_function_output(err)
+    count = _count.value
+    result = iter_str_list(raw_char_list, count)
+    print(result)
+    return result
+
+
 def get_crate_map(handle: int) -> Dict[str, Any]:
     """ Get crate map
     """
@@ -171,14 +200,54 @@ def get_crate_map(handle: int) -> Dict[str, Any]:
                              byref(_models), byref(_descriptions),
                              byref(_serial_numbers), byref(_fw_min_rel),
                              byref(_fw_max_rel))
-    check_function_output(err)
-    slots = _slots.value
-    channels = [_channels[i] for i in range(slots)]
-    models = iter_str_list(_models, slots)
-    descriptions = iter_str_list(_descriptions, slots)
-    serial_numbers = [_serial_numbers[i] for i in range(slots)]
-    firmware_releases = [(_fw_max_rel[i], _fw_min_rel[i])
-                         for i in range(slots)]
+    if check_function_output(err, should_raise=False):
+        # no error, GetCrateMap worked
+        slots = _slots.value
+        channels = [_channels[i] for i in range(slots)]
+        models = iter_str_list(_models, slots)
+        descriptions = iter_str_list(_descriptions, slots)
+        serial_numbers = [_serial_numbers[i] for i in range(slots)]
+        firmware_releases = [(_fw_max_rel[i], _fw_min_rel[i])
+                             for i in range(slots)]
+    else:
+        # error; could be connection or a bug in the lib (v6.3).
+        # let's try to brute force the map instead
+        # Probe a safe full slot range for SYx527-family crates instead of
+        # assuming a 4-slot chassis, which can silently truncate the map.
+        slots = 16
+        print("GetCrateMap failed, trying to determine crate configuration slot by slot (probing up to {} slots).".format(slots))
+        channels = []
+        models = []
+        descriptions = []
+        serial_numbers = []
+        firmware_releases = []
+        for slot in range(slots):
+            _channels = c_ushort()
+            _model = P(c_char)()
+            _description = P(c_char)()
+            _serial_number = c_ushort()
+            _fw_min_rel = c_ubyte()
+            _fw_max_rel = c_ubyte()
+            err = CAENHV_TestBdPresence(handle, slot, byref(_channels), byref(_model),
+                                        byref(_description), byref(_serial_number), byref(_fw_min_rel), byref(_fw_max_rel))
+            if not err == 0:
+                # no board present at this slot
+                channels.append(0)
+                models.append("")
+                descriptions.append("")
+                serial_numbers.append(0)
+                firmware_releases.append((0,0))
+                continue
+            model = get_strlist_element(_model, 0, 100)
+            description = get_strlist_element(_description, 0, 100)
+            fw = (_fw_max_rel.value, _fw_min_rel.value)
+            nch = _channels.value
+            serno = _serial_number.value
+            channels.append(nch)
+            models.append(model)
+            descriptions.append(description)
+            serial_numbers.append(serno)
+            firmware_releases.append(fw)
     result = dict(slots=slots,
                   channels=channels,
                   models=models,

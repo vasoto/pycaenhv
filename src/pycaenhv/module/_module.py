@@ -1,5 +1,7 @@
 from typing import Any
-from ..wrappers import exec_command, get_crate_map, init_system, deinit_system, list_commands
+import threading
+from time import sleep
+from ..wrappers import exec_command, get_crate_map, init_system, deinit_system, list_commands, get_module_swrelease
 from ..enums import CAENHV_SYSTEM_TYPE, LinkType
 from ._board import CaenHVBoard
 
@@ -11,6 +13,9 @@ class CaenHVModule:
         self.handle: int = -1
         self.boards = dict()
         self.connected: bool = False
+        self._keep_alive_stop = threading.Event()
+        self._keep_alive_thread = None
+        self._lock = threading.Lock()
 
     def __del__(self):
         self.disconnect()
@@ -69,10 +74,38 @@ class CaenHVModule:
                     firmware_release=self.mapping['firmware_releases'][slot])
 
         self.connected = True
+        # start keep-alive thread
+        self._keep_alive_stop.clear()
+        self._keep_alive_thread = threading.Thread(
+            target=self._keep_alive, daemon=True
+        )
+        self._keep_alive_thread.start()
 
     def disconnect(self) -> None:
         """ Terminate connection
         """
+        if self._keep_alive_stop:
+            self._keep_alive_stop.set()
+            if self._keep_alive_thread:
+                self._keep_alive_thread.join(1)
         if self.connected:
             deinit_system(self.handle)
             self.connected = False
+
+    def _keep_alive(self) -> None:
+        """Avoid connection time out after 30s."""
+        while not self._keep_alive_stop.is_set():
+            with self._lock:
+                # as suggested by the wrapper library manual, we request the
+                # swrelease at regular intervals
+                get_module_swrelease(self.handle)
+            sleep(10)
+
+    def __enter__(self):
+        """Acquire the lock to prevent the keep-alive thread from interfering."""
+        self._lock.acquire()
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_tb):
+        """Release the lock to allow the keep-alive thread from continuing."""
+        self._lock.release()

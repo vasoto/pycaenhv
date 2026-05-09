@@ -169,6 +169,19 @@ CAENHV_GetCrateMap = export_func(
     ],
     "Get the crate map")
 
+# CAENHVLIB_API CAENHVRESULT  CAENHV_TestBdPresence(int handle,
+# ushort slot, ushort *NrofCh, char **Model, char **Description, ushort *SerNum,
+# uchar *FmwRelMin, uchar *FmwRelMax);
+CAENHV_TestBdPresence = export_func(
+    lib,
+    'CAENHV_TestBdPresence',
+    c_int,
+    [c_int,
+     c_ushort, POINTER(c_ushort), POINTER(POINTER(c_char)),
+     POINTER(POINTER(c_char)), POINTER(c_ushort), POINTER(c_ubyte),
+     POINTER(c_ubyte)], "Test board presence.")
+
+
 # CAENHVLIB_API CAENHVRESULT  CAENHV_SetChParam(int handle, ushort slot,
 #  const char *ParName, ushort ChNum, const ushort *ChList, void *ParValue);
 CAENHV_SetChParam = export_func(
@@ -184,3 +197,16 @@ CAENHV_SetChParam = export_func(
         c_void_p  # ParValue
     ],
     "Set channel parameter's value")
+
+#CAENHVLIB_API CAENHVRESULT  CAENHV_GetSysProp(int handle,
+# const char *PropName, void *Result);
+CAENHV_GetSysProp = export_func(
+    lib,
+    'CAENHV_GetSysProp',
+    c_int,
+    [c_int, c_char_p, c_void_p],
+    "Get a system parameter's value")
+
+CAENHV_GetSysPropList = export_func(
+    lib, 'CAENHV_GetSysPropList', c_int,
+    [c_int, P(c_int), P(c_char_p)], "Get list of sys properties.")
