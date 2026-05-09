@@ -212,8 +212,10 @@ def get_crate_map(handle: int) -> Dict[str, Any]:
     else:
         # error; could be connection or a bug in the lib (v6.3).
         # let's try to brute force the map instead
-        print("GetCrateMap failed, trying to determine crate configuration slot by slot (max 4 slots assumed).")
-        slots = 4
+        # Probe a safe full slot range for SYx527-family crates instead of
+        # assuming a 4-slot chassis, which can silently truncate the map.
+        slots = 16
+        print("GetCrateMap failed, trying to determine crate configuration slot by slot (probing up to {} slots).".format(slots))
         channels = []
         models = []
         descriptions = []
